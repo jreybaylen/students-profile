@@ -1,0 +1,1 @@
+export { default as useStudentInformation } from './useStudentsInformation'
