@@ -15,3 +15,7 @@ body {
 .container {
     @apply max-w-[1200px] w-full mx-auto;
 }
+
+.table-component thead tr th {
+    @apply p-5 w-full cursor-pointer;
+}

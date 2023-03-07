@@ -1,6 +1,40 @@
 import { useStudentInformation } from '@hooks/index'
 
+import Table from '@shared/components/Table'
 import HeaderWidget from '@shared/widgets/Header'
+
+const TABLE_HEADERS = [
+    {
+        is_img: true,
+        label: '',
+        prop: 'profile_img'
+    },
+    {
+        label: 'Name',
+        prop: 'name',
+        linkProp: 'id'
+    },
+    {
+        label: 'Phone Number',
+        prop: 'phone'
+    },
+    {
+        label: 'Email',
+        prop: 'email'
+    },
+    {
+        label: 'Major',
+        prop: 'profile_major'
+    },
+    {
+        label: 'Status',
+        prop: 'profile_status_eval'
+    },
+    {
+        label: 'Total Course',
+        prop: 'courses_count'
+    }
+]
 
 export default function HomePage (): JSX.Element {
     const { data } = useStudentInformation()
@@ -8,10 +42,12 @@ export default function HomePage (): JSX.Element {
     return (
         <main>
             <HeaderWidget />
-            <div className="container py-4">
-                <pre>
-                    { JSON.stringify(data, null, 2) }
-                </pre>
+            <div className="container mt-12 mb-4">
+                <Table
+                    items={ data }
+                    dataKey="email"
+                    header={ TABLE_HEADERS }
+                />
             </div>
         </main>
     )
