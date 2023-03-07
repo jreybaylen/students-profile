@@ -1,5 +1,11 @@
+import HeaderWidget from '@shared/widgets/Header'
+
 export default function HomePage (): JSX.Element {
+
+
     return (
-        <div>Hello from Home!</div>
+        <main>
+            <HeaderWidget />
+        </main>
     )
 }
