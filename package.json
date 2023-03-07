@@ -1,12 +1,19 @@
 {
   "name": "students-portal",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "engines": {
+    "npm": "use yarn",
+    "yarn": ">=1.22.17"
+  },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build": "tsc && yarn tailwind:prod && vite build",
+    "tailwind": "npx tailwindcss -i ./src/styles/global.css -o ./src/styles/global.prod.css",
+    "tailwind:dev": "yarn tailwind --watch",
+    "tailwind:prod": "yarn tailwind --minify"
   },
   "dependencies": {
     "react": "^18.2.0",
@@ -16,6 +23,7 @@
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",
+    "tailwindcss": "^3.2.7",
     "typescript": "^4.9.3",
     "vite": "^4.1.0"
   }
