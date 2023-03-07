@@ -29,17 +29,18 @@ type CourseProps = {
     semester_code: string
     course_selection: string
 }
-type StudentInformationprops = {
+type CourseKeyProps = {
+    [ key: string ]: CourseProps
+}
+export type StudentInformationprops = {
     profile_img: string
     courses_count: number
     profile: ProfileProps
     profile_major: string
     profile_status_eval: string
     courses: Array<CourseProps>
+    courses_no_duplicates: CourseKeyProps
 } & StudentProps
-type CourseKeyProps = {
-    [ key: string ]: number
-}
 
 export default function useStudentInformation () {
     const [ ERROR, setError ] = useState()
@@ -51,6 +52,14 @@ export default function useStudentInformation () {
     }
 
     useEffect(() => {
+        const CACHE_STUDENTS = sessionStorage.getItem('students-profile')
+
+        if (CACHE_STUDENTS) {
+            setStudents(JSON.parse(CACHE_STUDENTS))
+
+            return
+        }
+
         async function getStudents () {
             toggleLoading(true)
 
@@ -61,7 +70,7 @@ export default function useStudentInformation () {
                 console.log('COURSES_DATA: ', COURSES_DATA)
                 const MERGE_DATA = (STUDENTS_DATA as Array<StudentProps>).map(
                     (STUDENT: StudentProps) => {
-                        let coursesLength: CourseKeyProps = { }
+                        let coursesNoDuplicates: CourseKeyProps = { }
                         const PROFILE = (PROFILE_DATA as Array<ProfileProps>).find(
                             (PROFILE: ProfileProps) => isIncluded(PROFILE.user_id, STUDENT.id)
                         )
@@ -70,7 +79,7 @@ export default function useStudentInformation () {
                                 const IS_INCLUDED = isIncluded(COURSE.user_id, STUDENT.id)
 
                                 if (IS_INCLUDED) {
-                                    coursesLength[ `${ COURSE.course_selection }-${ COURSE.semester_code }` ] = 1
+                                    coursesNoDuplicates[ `${ COURSE.course_selection }-${ COURSE.semester_code }` ] = COURSE
                                 }
 
                                 return IS_INCLUDED
@@ -83,12 +92,14 @@ export default function useStudentInformation () {
                             courses: COURSES,
                             profile_major: PROFILE?.major,
                             profile_img: PROFILE?.user_img,
-                            courses_count: Object.keys(coursesLength).length,
+                            courses_no_duplicates: coursesNoDuplicates,
+                            courses_count: Object.keys(coursesNoDuplicates).length,
                             profile_status_eval: getStatus(PROFILE?.status[0]?.type || 0)
                         }
                     }
                 )
 
+                sessionStorage.setItem('students-profile', JSON.stringify(MERGE_DATA))
                 setStudents(MERGE_DATA as Array<StudentInformationprops>)
             } catch (ERROR: any) {
                 setError(ERROR)
