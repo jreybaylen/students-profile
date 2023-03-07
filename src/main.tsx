@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-import './styles/global.prod.css'
+import '@styles/global.prod.css'
 
-import { AppRoutes } from './routes/Routes'
+import { AppRoutes } from '@routes/Routes'
 
 ReactDOM.createRoot(
 	document.getElementById('root') as HTMLElement
