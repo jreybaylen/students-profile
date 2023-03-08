@@ -12,16 +12,17 @@ type StudentProps = {
     email: string
     nickname: string
 }
+type StatusProps = {
+    date: string
+    type: number
+}
 type ProfileProps = {
     id: number
     major: string
-    status: Array<{
-        date: string
-        type: number
-    }>
     year: string
     user_id: string
     user_img: string
+    status: Array<StatusProps>
 }
 export type CourseProps = {
     id: number
@@ -86,6 +87,11 @@ export default function useStudentInformation () {
                                 return IS_INCLUDED
                             }
                         )
+                        const SORTED_STATUS = PROFILE?.status.sort(
+                            (PREV_STATUS: StatusProps, NEXT_STATUS: StatusProps) => {
+                                return Date.parse(NEXT_STATUS.date) - Date.parse(PREV_STATUS.date)
+                            }
+                        )
 
                         return {
                             ...STUDENT,
@@ -95,7 +101,7 @@ export default function useStudentInformation () {
                             profile_img: PROFILE?.user_img,
                             courses_no_duplicates: coursesNoDuplicates,
                             courses_count: Object.keys(coursesNoDuplicates).length,
-                            profile_status_eval: getStatus(PROFILE?.status[0]?.type || 0)
+                            profile_status_eval: getStatus(SORTED_STATUS![0]?.type || 0)
                         }
                     }
                 )
