@@ -17,12 +17,12 @@ type TableProps = {
 export default function Table (PROPS: TableProps): JSX.Element {
     return (
         <div className="w-full">
-            <div className="w-full rounded-md flex flex-row justify-center gap-4 bg-gray-200 hover:bg-gray-300">
+            <div className="w-full rounded-md flex flex-row justify-around mb-6 bg-gray-200 hover:bg-gray-300">
                 { PROPS.header.map(
                     (ITEM: HeaderProps) => (
                         <div
                             key={ ITEM.label }
-                            className="w-[14.30%] text-left py-4 cursor-default"
+                            className="text-left w-full p-6 cursor-default"
                         >
                             <span className="font-semibold">
                                 { ITEM.label }
@@ -36,18 +36,18 @@ export default function Table (PROPS: TableProps): JSX.Element {
                     (ITEM: any) => (
                         <div
                             key={ ITEM[ PROPS.dataKey ] }
-                            className="hover:shadow-2xl rounded-md duration-300 py-6 px-3 flex flex-row gap-3 items-center justify-center"
+                            className="hover:shadow-2xl rounded-md duration-300 p-6 flex flex-row items-center justify-around"
                         >
                             { PROPS.header.map(
                                 (ITEM_HEADER: HeaderProps, INDEX: number) => (
                                     <div
-                                        className="cursor-default text-left w-[14.29%] font-light"
                                         key={ `inner-${ INDEX + 3 }-${ ITEM[ PROPS.dataKey ] }` }
+                                        className={ `cursor-default text-left font-light ${ ITEM_HEADER.is_img ? 'w-[89%]' : 'w-full' }` }
                                     >
                                         { ITEM_HEADER.is_img ? (
                                             <img
                                                 alt="Profile Photo"
-                                                className="block rounded-full w-[100px] shadow-xl border-2"
+                                                className="block rounded-full max-w-[100px] shadow-xl border-2"
                                                 src={ `/assets/${ ITEM[ ITEM_HEADER.prop ] || 'default.jpg' }` }
                                             />
                                         ) : ITEM_HEADER.linkProp ? (

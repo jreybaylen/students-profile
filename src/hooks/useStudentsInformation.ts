@@ -49,7 +49,7 @@ export default function useStudentInformation () {
     const [ STUDENTS, setStudents ] = useState<Array<StudentInformationprops>>([])
 
     function isIncluded (FROM: string, ID: number) {
-        return FROM.includes(`_${ ID }`)
+        return FROM === `user_${ ID }`
     }
 
     useEffect(() => {

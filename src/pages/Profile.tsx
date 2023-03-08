@@ -60,7 +60,7 @@ export default function ProfilePage (): JSX.Element {
                 </div>
             </section>
             <section className="container flex flex-row">
-                <aside className="profile-content w-3/12">
+                <aside className="profile-content w-3/12 h-max">
                     <div className="w-full mt-1 mb-8 flex flex-row items-center justify-center rounded-full overflow-hidden">
                         <img
                             alt="Profile Photo"
@@ -95,7 +95,7 @@ export default function ProfilePage (): JSX.Element {
                         </p>
                     </div>
                 </aside>
-                <div className="profile-content ml-3 w-9/12">
+                <div className="profile-content ml-3 w-9/12 h-max max-h-[700px] overflow-y-auto">
                     { STUDENT?.courses?.length ? (
                         <TableWidget
                             dataKey="course_name"
