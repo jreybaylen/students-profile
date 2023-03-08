@@ -22,7 +22,7 @@ export default function TableItems (PROPS: TableItemsProps): JSX.Element {
                         { ITEM.is_img ? (
                             <img
                                 alt="Profile Photo"
-                                className="block rounded-full max-w-[100px] shadow-xl border-2"
+                                className="block rounded-full max-w-[150px] shadow-xl border-2"
                                 src={ `/assets/${ PROPS.item[ ITEM.prop ] || 'default.jpg' }` }
                             />
                         ) : ITEM.linkProp ? (

@@ -2,8 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 import { getStatus } from '@utils/status'
-import { SESSION_STORAGE_NAME } from '@constants/index'
-import type { HeaderProps } from '@shared/widgets/Table'
+import { SESSION_STUDENTS_PROFILE } from '@constants/index'
 
 type StudentProps = {
     id: number
@@ -55,7 +54,7 @@ export default function useStudentInformation () {
     }
 
     useEffect(() => {
-        const CACHE_STUDENTS = sessionStorage.getItem(SESSION_STORAGE_NAME)
+        const CACHE_STUDENTS = sessionStorage.getItem(SESSION_STUDENTS_PROFILE)
 
         if (CACHE_STUDENTS) {
             setStudents(JSON.parse(CACHE_STUDENTS))
@@ -106,7 +105,7 @@ export default function useStudentInformation () {
                     }
                 )
 
-                sessionStorage.setItem(SESSION_STORAGE_NAME, JSON.stringify(MERGE_DATA))
+                sessionStorage.setItem(SESSION_STUDENTS_PROFILE, JSON.stringify(MERGE_DATA))
                 setStudents(MERGE_DATA as Array<StudentInformationprops>)
             } catch (ERROR: any) {
                 setError(ERROR)

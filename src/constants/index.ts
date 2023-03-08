@@ -1,6 +1,7 @@
 import type { TableProps } from '@shared/widgets/Table'
 
-export const SESSION_STORAGE_NAME = 'students-profile'
+export const SESSION_CURRENCIES = 'students-currencies'
+export const SESSION_STUDENTS_PROFILE = 'students-profile'
 
 export const HOME_TABLE_HEADERS: TableProps['header'] = [
     {
