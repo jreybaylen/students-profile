@@ -12,7 +12,7 @@ import Header from '@shared/components/Header'
 export default function HomePage (): JSX.Element {
     const [ SEARCH, setSearch ] = useState('')
     const [ SORTING, setSorting ] = useState<HeaderProps>()
-    const { data, updateStudents } = useStudentInformation()
+    const { data, isLoading, updateStudents } = useStudentInformation()
     const [ CLONE_DATA, setCloneData ] = useState<Array<StudentInformationprops>>([])
 
     function handleSearchChange (EVENT: ChangeEvent<HTMLInputElement>) {
@@ -81,23 +81,26 @@ export default function HomePage (): JSX.Element {
                         className="w-full border-[1px] py-3 px-5 rounded-full font-light"
                     />
                 </div>
-                { SEARCH ? (
-                    <TableWidget
-                        dataKey="email"
-                        items={ CLONE_DATA }
-                        activeSort={ SORTING }
-                        onSort={ hanleSortTable }
-                        header={ HOME_TABLE_HEADERS }
-                    />
-                ) : (
-                    <TableWidget
-                        items={ data }
-                        dataKey="email"
-                        activeSort={ SORTING }
-                        onSort={ hanleSortTable }
-                        header={ HOME_TABLE_HEADERS }
-                    />
-                ) }
+                { isLoading
+                    ? <div>Loading...</div>
+                    : SEARCH ? (
+                        <TableWidget
+                            dataKey="email"
+                            items={ CLONE_DATA }
+                            activeSort={ SORTING }
+                            onSort={ hanleSortTable }
+                            header={ HOME_TABLE_HEADERS }
+                        />
+                    ) : (
+                        <TableWidget
+                            items={ data }
+                            dataKey="email"
+                            activeSort={ SORTING }
+                            onSort={ hanleSortTable }
+                            header={ HOME_TABLE_HEADERS }
+                        />
+                    )
+                }
             </section>
         </main>
     )
