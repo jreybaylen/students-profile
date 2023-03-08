@@ -1,6 +1,8 @@
+import type { TableProps } from '@shared/widgets/Table'
+
 export const SESSION_STORAGE_NAME = 'students-profile'
 
-export const HOME_TABLE_HEADERS = [
+export const HOME_TABLE_HEADERS: TableProps['header'] = [
     {
         is_img: true,
         label: '',
@@ -9,7 +11,8 @@ export const HOME_TABLE_HEADERS = [
     {
         label: 'Name',
         prop: 'name',
-        linkProp: 'id'
+        linkProp: 'id',
+        sort: 'None'
     },
     {
         label: 'Phone Number',
@@ -21,11 +24,13 @@ export const HOME_TABLE_HEADERS = [
     },
     {
         label: 'Major',
-        prop: 'profile_major'
+        prop: 'profile_major',
+        sort: 'None'
     },
     {
         label: 'Status',
-        prop: 'profile_status_eval'
+        prop: 'profile_status_eval',
+        sort: 'None'
     },
     {
         label: 'Total Course',
@@ -33,10 +38,11 @@ export const HOME_TABLE_HEADERS = [
     }
 ]
 
-export const PROFILE_TABLE_HEADERS = [
+export const PROFILE_TABLE_HEADERS: TableProps['header'] = [
     {
         label: 'Semester Code',
-        prop: 'semester_code'
+        prop: 'semester_code',
+        sort: 'None'
     },
     {
         label: 'Course Name',
