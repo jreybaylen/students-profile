@@ -1,6 +1,6 @@
 import { useStudentInformation } from '@hooks/index'
 
-import { TABLE_HEADERS } from '@constants/index'
+import { HOME_TABLE_HEADERS } from '@constants/index'
 
 import TableWidget from '@shared/widgets/Table'
 import Header from '@shared/components/Header'
@@ -15,7 +15,7 @@ export default function HomePage (): JSX.Element {
                 <TableWidget
                     items={ data }
                     dataKey="email"
-                    header={ TABLE_HEADERS }
+                    header={ HOME_TABLE_HEADERS }
                 />
             </section>
         </main>

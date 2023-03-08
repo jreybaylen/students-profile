@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import { SESSION_STORAGE_NAME } from '@constants/index'
 import type { StudentInformationprops } from '@hooks/useStudentsInformation'
+import { SESSION_STORAGE_NAME, PROFILE_TABLE_HEADERS } from '@constants/index'
 
 import Header from '@shared/components/Header'
 import TableWidget from '@shared/widgets/Table'
@@ -36,14 +36,19 @@ export default function ProfilePage (): JSX.Element {
             return
         }
 
-        setStudent(FIND_PROFILE)
+        setStudent({
+            ...FIND_PROFILE,
+            courses: Object.keys(FIND_PROFILE.courses_no_duplicates).map(
+                (COURSE: string) => FIND_PROFILE.courses_no_duplicates[ COURSE ]
+            )
+        })
     }, [])
 
     return (
         <main>
             <Header />
             <section className="container">
-                <div className="my-4">
+                <div className="my-12">
                     <button
                         type="button"
                         onClick={ handleGoBack }
@@ -91,12 +96,21 @@ export default function ProfilePage (): JSX.Element {
                     </div>
                 </aside>
                 <div className="profile-content ml-3 w-9/12">
-
+                    { STUDENT?.courses?.length ? (
+                        <TableWidget
+                            dataKey="course_name"
+                            items={ STUDENT?.courses }
+                            header={ PROFILE_TABLE_HEADERS }
+                        />
+                    ) : (
+                        <div className="flex mt-6 justify-center">
+                            <p className="text-xl py-3 px-12 border-2 rounded-xl">
+                                No Data Found
+                            </p>
+                        </div>
+                    ) }
                 </div>
             </section>
-            <pre>
-                { JSON.stringify(STUDENT, null, 2) }
-            </pre>
         </main>
     )
 }

@@ -17,7 +17,7 @@ type TableProps = {
 export default function Table (PROPS: TableProps): JSX.Element {
     return (
         <div className="w-full">
-            <div className="w-full rounded-md flex flex-row gap-3 bg-gray-200 hover:bg-gray-300">
+            <div className="w-full rounded-md flex flex-row justify-center gap-4 bg-gray-200 hover:bg-gray-300">
                 { PROPS.header.map(
                     (ITEM: HeaderProps) => (
                         <div

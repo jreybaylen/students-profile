@@ -1,6 +1,6 @@
 export const SESSION_STORAGE_NAME = 'students-profile'
 
-export const TABLE_HEADERS = [
+export const HOME_TABLE_HEADERS = [
     {
         is_img: true,
         label: '',
@@ -30,5 +30,24 @@ export const TABLE_HEADERS = [
     {
         label: 'Total Course',
         prop: 'courses_count'
+    }
+]
+
+export const PROFILE_TABLE_HEADERS = [
+    {
+        label: 'Semester Code',
+        prop: 'semester_code'
+    },
+    {
+        label: 'Course Name',
+        prop: 'course_name'
+    },
+    {
+        label: 'Course Selection',
+        prop: 'course_selection'
+    },
+    {
+        label: 'Course Fee',
+        prop: 'course_fee'
     }
 ]
