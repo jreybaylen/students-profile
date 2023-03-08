@@ -131,21 +131,13 @@ export default function ProfilePage (): JSX.Element {
                     </div>
                 </aside>
                 <div className="profile-content ml-3 w-9/12 h-max max-h-[700px] overflow-y-auto">
-                    { STUDENT?.courses?.length ? (
-                        <TableWidget
-                            dataKey="course_name"
-                            activeSort={ SORTING }
-                            items={ STUDENT?.courses }
-                            onSort={ handleTableSort }
-                            header={ PROFILE_TABLE_HEADERS }
-                        />
-                    ) : (
-                        <div className="flex mt-6 mb-8 justify-center">
-                            <p className="text-xl py-3 px-12 border-2 rounded-xl">
-                                No Data Found
-                            </p>
-                        </div>
-                    ) }
+                    <TableWidget
+                        dataKey="course_name"
+                        activeSort={ SORTING }
+                        onSort={ handleTableSort }
+                        items={ STUDENT?.courses || [] }
+                        header={ PROFILE_TABLE_HEADERS }
+                    />
                 </div>
             </section>
         </main>

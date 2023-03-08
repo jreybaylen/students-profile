@@ -69,31 +69,39 @@ export default function Table (PROPS: TableProps): JSX.Element {
                 ) }
             </div>
             <div className="w-full flex flex-col table-body">
-                { items.map(
-                    (ITEM: any, INDEX: number) => {
-                        if (ITEM instanceof Array) {
-                            return ITEM.map(
-                                (GROUP_ITEM) => (
-                                    <TableItems
-                                        item={ GROUP_ITEM }
-                                        dataKey={ dataKey }
-                                        references={ header }
-                                        key={ `${ GROUP_ITEM[ dataKey ] }-${ INDEX * 4 }` }
-                                    />
+                { items.length
+                    ? items.map(
+                        (ITEM: any, INDEX: number) => {
+                            if (ITEM instanceof Array) {
+                                return ITEM.map(
+                                    (GROUP_ITEM) => (
+                                        <TableItems
+                                            item={ GROUP_ITEM }
+                                            dataKey={ dataKey }
+                                            references={ header }
+                                            key={ `${ GROUP_ITEM[ dataKey ] }-${ INDEX * 4 }` }
+                                        />
+                                    )
                                 )
+                            }
+
+                            return (
+                                <TableItems
+                                    item={ ITEM }
+                                    dataKey={ dataKey }
+                                    references={ header }
+                                    key={ `${ ITEM[ dataKey ] }-${ INDEX * 4 }` }
+                                />
                             )
                         }
-
-                        return (
-                            <TableItems
-                                item={ ITEM }
-                                dataKey={ dataKey }
-                                references={ header }
-                                key={ `${ ITEM[ dataKey ] }-${ INDEX * 4 }` }
-                            />
-                        )
-                    }
-                ) }
+                    ) : (
+                        <div className="flex mt-6 mb-8 justify-center">
+                            <p className="text-xl py-3 px-12 border-2 rounded-xl">
+                                No Data Found
+                            </p>
+                        </div>
+                    )
+                }
             </div>
         </div>
     )

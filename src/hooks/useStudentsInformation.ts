@@ -48,31 +48,6 @@ export default function useStudentInformation () {
     const [ ERROR, setError ] = useState()
     const [ LOADING, toggleLoading ] = useState(false)
     const [ STUDENTS, setStudents ] = useState<Array<StudentInformationprops>>([])
-    
-    function toggleSorting (DATA: HeaderProps) {
-        const IS_ASC = DATA.sort === 'ASC'
-        const PROP_SORT = DATA.prop as keyof StudentInformationprops
-        
-        setStudents(
-            (PREV_STUDENTS: Array<StudentInformationprops>) => {
-                const SORTED_STUDENTS = PREV_STUDENTS.sort(
-                    (PREV_STUDENT: StudentInformationprops, NEXT_STUDENT: StudentInformationprops) => {
-                        if (PREV_STUDENT[ PROP_SORT ] < NEXT_STUDENT[ PROP_SORT ]) {
-                            return IS_ASC ? -1 : 1
-                        }
-
-                        if (PREV_STUDENT[ PROP_SORT ] > NEXT_STUDENT[ PROP_SORT ]) {
-                            return IS_ASC ? 1 : -1
-                        }
-
-                        return 0
-                    }
-                )
-
-                return SORTED_STUDENTS
-            }
-        )
-    }
 
     function isIncluded (FROM: string, ID: number) {
         return FROM === `user_${ ID }`
@@ -139,8 +114,8 @@ export default function useStudentInformation () {
 
     return {
         error: ERROR,
-        toggleSorting,
         data: STUDENTS,
-        isLoading: LOADING
+        isLoading: LOADING,
+        updateStudents: setStudents
     }
 }
