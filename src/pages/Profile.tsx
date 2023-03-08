@@ -2,19 +2,56 @@ import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import { groupBy } from '@utils/group'
-import type { StudentInformationprops } from '@hooks/useStudentsInformation'
+import type { HeaderProps } from '@shared/widgets/Table'
 import { SESSION_STORAGE_NAME, PROFILE_TABLE_HEADERS } from '@constants/index'
+import type { StudentInformationprops, CourseProps } from '@hooks/useStudentsInformation'
 
 import Header from '@shared/components/Header'
 import TableWidget from '@shared/widgets/Table'
 
+type ModifiedStudentInformationprops = {
+    courses: Array<Array<CourseProps>>
+} & Omit<StudentInformationprops, 'courses'>
+
 export default function ProfilePage (): JSX.Element {
     const params = useParams()
     const navigate = useNavigate()
-    const [ STUDENT, setStudent ] = useState<StudentInformationprops>()
+    const [ SORTING, setSorting ] = useState<HeaderProps>()
+    const [ STUDENT, setStudent ] = useState<ModifiedStudentInformationprops>()
     
     function handleGoBack () {
         navigate(-1)
+    }
+
+    function handleTableSort (DATA: HeaderProps, SORT_TYPE: HeaderProps['sort']) {
+        const UPDATED_SORTING = {
+            ...DATA,
+            sort: SORT_TYPE || 'None'
+        }
+        const IS_ASC = UPDATED_SORTING.sort === 'ASC'
+
+        setSorting(UPDATED_SORTING)
+        setStudent(
+            (PREV_STUDENT: ModifiedStudentInformationprops | undefined) => ({
+                ...(PREV_STUDENT as ModifiedStudentInformationprops),
+                courses: (PREV_STUDENT as ModifiedStudentInformationprops).courses.sort(
+                    (PREV_COURSE: Array<CourseProps>, NEXT_COURSE: Array<CourseProps>) => {
+                        const PREV_DATA = PREV_COURSE[0][ DATA.prop as keyof CourseProps ]
+                        const NEXT_DATA = NEXT_COURSE[0][ DATA.prop as keyof CourseProps ]
+
+                        if (PREV_DATA < NEXT_DATA) {
+                            return IS_ASC ? -1 : 1
+                        }
+
+                        if (PREV_DATA > NEXT_DATA) {
+                            return IS_ASC ? 1 : -1
+                        }
+
+                        return 0
+                    }
+                )
+            })
+        )
     }
 
     useEffect(() => {
@@ -105,7 +142,9 @@ export default function ProfilePage (): JSX.Element {
                     { STUDENT?.courses?.length ? (
                         <TableWidget
                             dataKey="course_name"
+                            activeSort={ SORTING }
                             items={ STUDENT?.courses }
+                            onSort={ handleTableSort }
                             header={ PROFILE_TABLE_HEADERS }
                         />
                     ) : (

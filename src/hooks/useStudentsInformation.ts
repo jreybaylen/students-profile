@@ -23,7 +23,7 @@ type ProfileProps = {
     user_id: string
     user_img: string
 }
-type CourseProps = {
+export type CourseProps = {
     id: number
     user_id: string
     course_fee: string
