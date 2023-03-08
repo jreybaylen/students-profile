@@ -24,9 +24,15 @@ $ yarn dev
 ```
 - Run the tailwind server
 ```bash
-$ yarn tailwind:dev
+$ yarn tw:dev
 ```
 or
 ```bash
-$ yarn tailwind:prod
+$ yarn tw:prod
+```
+
+## Production
+- Build the project
+```bash
+$ yarn build
 ```
