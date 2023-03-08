@@ -1,7 +1,7 @@
 import { useStudentInformation } from '@hooks/index'
 
-import Table from '@shared/components/Table'
-import HeaderWidget from '@shared/widgets/Header'
+import Table from '@shared/widgets/Table'
+import HeaderWidget from '@shared/components/Header'
 
 const TABLE_HEADERS = [
     {

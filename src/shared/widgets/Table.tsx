@@ -16,34 +16,32 @@ type TableProps = {
 
 export default function Table (PROPS: TableProps): JSX.Element {
     return (
-        <table className="w-full table-fixed table-component">
-            <thead className="w-full table">
-                <tr className="w-full rounded-t-md flex flex-row bg-gray-200 hover:bg-gray-300">
-                    { PROPS.header.map(
-                        (ITEM: HeaderProps) => (
-                            <th
-                                colSpan={ 1 }
-                                key={ ITEM.label }
-                                className="w-[14.30%] text-left"
-                            >
+        <div className="w-full">
+            <div className="w-full rounded-md flex flex-row gap-3 bg-gray-200 hover:bg-gray-300">
+                { PROPS.header.map(
+                    (ITEM: HeaderProps) => (
+                        <div
+                            key={ ITEM.label }
+                            className="w-[14.30%] text-left py-4 cursor-default"
+                        >
+                            <span className="font-semibold">
                                 { ITEM.label }
-                            </th>
-                        )
-                    ) }
-                </tr>
-            </thead>
-            <tbody className="table w-full">
+                            </span>
+                        </div>
+                    )
+                ) }
+            </div>
+            <div className="w-full flex flex-col">
                 { PROPS.items.map(
                     (ITEM: any) => (
-                        <tr
+                        <div
                             key={ ITEM[ PROPS.dataKey ] }
-                            className="w-full hover:bg-gray-100"
+                            className="hover:shadow-2xl rounded-md duration-300 py-6 px-3 flex flex-row gap-3 items-center justify-center"
                         >
                             { PROPS.header.map(
                                 (ITEM_HEADER: HeaderProps, INDEX: number) => (
-                                    <td
-                                        colSpan={ 1 }
-                                        className="p-5 cursor-default text-left w-[14.29%]"
+                                    <div
+                                        className="cursor-default text-left w-[14.29%]"
                                         key={ `inner-${ INDEX + 3 }-${ ITEM[ PROPS.dataKey ] }` }
                                     >
                                         { ITEM_HEADER.is_img ? (
@@ -54,19 +52,19 @@ export default function Table (PROPS: TableProps): JSX.Element {
                                             />
                                         ) : ITEM_HEADER.linkProp ? (
                                             <Link
-                                                className="hover:underline text-cyan-600"
                                                 to={ `/profile/${ ITEM[ ITEM_HEADER.linkProp ] }` }
+                                                className="hover:underline text-cyan-600 font-semibold"
                                             >
                                                 { ITEM[ ITEM_HEADER.prop ] } { ITEM.nickname ? `(${ ITEM.nickname })` : '' }
                                             </Link>
                                         ) : ITEM[ ITEM_HEADER.prop ] }
-                                    </td>
+                                    </div>
                                 )
                             ) }
-                        </tr>
+                        </div>
                     )
                 ) }
-            </tbody>
-        </table>
+            </div>
+        </div>
     )
 }

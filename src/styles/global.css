@@ -2,20 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-    font-family: 'Source Sans Pro', sans-serif;
-}
-
 * {
-    box-sizing: border-box;
-    @apply text-slate-800;
+    font-family: 'Fira Sans Condensed', sans-serif;
+    @apply text-slate-800 font-light box-border;
 }
 
 .container {
     @apply max-w-[1200px] w-full mx-auto;
-}
-
-.table-component thead tr th {
-    @apply p-5 w-full cursor-pointer;
 }

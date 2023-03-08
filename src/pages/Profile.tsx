@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 
 import type { StudentInformationprops } from '@hooks/useStudentsInformation'
 
-import HeaderWidget from '@shared/widgets/Header'
+import HeaderWidget from '@shared/components/Header'
 
 export default function ProfilePage (): JSX.Element {
     const params = useParams()
