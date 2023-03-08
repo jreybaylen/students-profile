@@ -1,10 +1,10 @@
-import { Link } from 'react-router-dom'
+import TableItems from './TableItems'
 
 type OptionalHeaderProps = {
     is_img: boolean
     linkProp: string
 }
-type HeaderProps = {
+export type HeaderProps = {
     prop: string
     label: string
 } & Partial<OptionalHeaderProps>
@@ -16,12 +16,12 @@ type TableProps = {
 
 export default function Table (PROPS: TableProps): JSX.Element {
     return (
-        <div className="w-full">
+        <div className="w-full table-widget">
             <div className="w-full p-6 rounded-md flex flex-row justify-around mb-6 bg-gray-200 hover:bg-gray-300">
                 { PROPS.header.map(
-                    (ITEM: HeaderProps) => (
+                    (ITEM: HeaderProps, INDEX: number) => (
                         <div
-                            key={ ITEM.label }
+                            key={ `${ ITEM.label }-${ INDEX * 2 }` }
                             className="text-left w-full cursor-default"
                         >
                             <span className="font-semibold">
@@ -31,38 +31,31 @@ export default function Table (PROPS: TableProps): JSX.Element {
                     )
                 ) }
             </div>
-            <div className="w-full flex flex-col">
+            <div className="w-full flex flex-col table-body">
                 { PROPS.items.map(
-                    (ITEM: any) => (
-                        <div
-                            key={ ITEM[ PROPS.dataKey ] }
-                            className="hover:shadow-2xl rounded-md duration-300 p-6 flex flex-row items-center justify-around"
-                        >
-                            { PROPS.header.map(
-                                (ITEM_HEADER: HeaderProps, INDEX: number) => (
-                                    <div
-                                        className="cursor-default text-left font-light w-full"
-                                        key={ `inner-${ INDEX + 3 }-${ ITEM[ PROPS.dataKey ] }` }
-                                    >
-                                        { ITEM_HEADER.is_img ? (
-                                            <img
-                                                alt="Profile Photo"
-                                                className="block rounded-full max-w-[100px] shadow-xl border-2"
-                                                src={ `/assets/${ ITEM[ ITEM_HEADER.prop ] || 'default.jpg' }` }
-                                            />
-                                        ) : ITEM_HEADER.linkProp ? (
-                                            <Link
-                                                to={ `/profile/${ ITEM[ ITEM_HEADER.linkProp ] }` }
-                                                className="hover:underline text-cyan-600 font-semibold"
-                                            >
-                                                { ITEM[ ITEM_HEADER.prop ] } { ITEM.nickname ? `(${ ITEM.nickname })` : '' }
-                                            </Link>
-                                        ) : ITEM[ ITEM_HEADER.prop ] }
-                                    </div>
+                    (ITEM: any, INDEX: number) => {
+                        if (ITEM instanceof Array) {
+                            return ITEM.map(
+                                (GROUP_ITEM) => (
+                                    <TableItems
+                                        item={ GROUP_ITEM }
+                                        dataKey={ PROPS.dataKey }
+                                        references={ PROPS.header }
+                                        key={ `${ GROUP_ITEM[ PROPS.dataKey ] }-${ INDEX * 4 }` }
+                                    />
                                 )
-                            ) }
-                        </div>
-                    )
+                            )
+                        }
+
+                        return (
+                            <TableItems
+                                item={ ITEM }
+                                dataKey={ PROPS.dataKey }
+                                references={ PROPS.header }
+                                key={ `${ ITEM[ PROPS.dataKey ] }-${ INDEX * 4 }` }
+                            />
+                        )
+                    }
                 ) }
             </div>
         </div>

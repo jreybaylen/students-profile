@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { groupBy } from '@utils/group'
 import type { StudentInformationprops } from '@hooks/useStudentsInformation'
 import { SESSION_STORAGE_NAME, PROFILE_TABLE_HEADERS } from '@constants/index'
 
@@ -36,10 +37,15 @@ export default function ProfilePage (): JSX.Element {
             return
         }
 
+        const MODIFIED_COURSES = Object.keys(FIND_PROFILE.courses_no_duplicates).map(
+            (COURSE: string) => FIND_PROFILE.courses_no_duplicates[ COURSE ]
+        )
+        const GROUP_BY_SEM_CODE = groupBy(MODIFIED_COURSES, 'semester_code')
+
         setStudent({
             ...FIND_PROFILE,
-            courses: Object.keys(FIND_PROFILE.courses_no_duplicates).map(
-                (COURSE: string) => FIND_PROFILE.courses_no_duplicates[ COURSE ]
+            courses: Object.keys(GROUP_BY_SEM_CODE).map(
+                (CODE: string) => GROUP_BY_SEM_CODE[ CODE ]
             )
         })
     }, [])
