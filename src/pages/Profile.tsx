@@ -10,7 +10,7 @@ import type { StudentInformationprops, CourseProps } from '@hooks/useStudentsInf
 import { SESSION_STUDENTS_PROFILE, PROFILE_TABLE_HEADERS, CONVERSION_API } from '@constants/index'
 
 import { Header } from '@shared/components'
-import { Table, Profile, Notification, MenuList } from '@shared/widgets'
+import { Table, Profile, Notification, MenuList, Loading } from '@shared/widgets'
 
 type ModifiedStudentInformationprops = {
     courses: Array<Array<CourseProps>>
@@ -132,6 +132,7 @@ export default function ProfilePage (): JSX.Element {
     }
     
     async function handleUpdateCurrency (ITEM: string) {
+        toggleDropdown(false)
         toggleLoading(true)
 
         try {
@@ -147,7 +148,6 @@ export default function ProfilePage (): JSX.Element {
                 (ERROR as AxiosError<ConversionErrorProps>).response?.data['error-type']!
             )
         } finally {
-            toggleDropdown(false)
             toggleLoading(false)
         }
     }
@@ -159,6 +159,7 @@ export default function ProfilePage (): JSX.Element {
     return (
         <main>
             <Header />
+            { LOADING && <Loading /> }
             <section className="container my-12">
                 <Notification
                     message={ EXCHANGE_ERROR }

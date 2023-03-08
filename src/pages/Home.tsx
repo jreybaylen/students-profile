@@ -6,8 +6,8 @@ import { HOME_TABLE_HEADERS } from '@constants/index'
 import type { HeaderProps } from '@shared/widgets/Table'
 import type { StudentInformationprops } from '@hooks/useStudentsInformation'
 
-import TableWidget from '@shared/widgets/Table'
 import Header from '@shared/components/Header'
+import { Table, Loading } from '@shared/widgets'
 
 export default function HomePage (): JSX.Element {
     const [ SEARCH, setSearch ] = useState('')
@@ -83,9 +83,9 @@ export default function HomePage (): JSX.Element {
                     />
                 </div>
                 { isLoading
-                    ? <div>Loading...</div>
+                    ? <Loading />
                     : SEARCH ? (
-                        <TableWidget
+                        <Table
                             dataKey="email"
                             items={ CLONE_DATA }
                             activeSort={ SORTING }
@@ -93,7 +93,7 @@ export default function HomePage (): JSX.Element {
                             header={ HOME_TABLE_HEADERS }
                         />
                     ) : (
-                        <TableWidget
+                        <Table
                             items={ data }
                             dataKey="email"
                             activeSort={ SORTING }
