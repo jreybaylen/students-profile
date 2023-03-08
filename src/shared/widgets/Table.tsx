@@ -17,12 +17,12 @@ type TableProps = {
 export default function Table (PROPS: TableProps): JSX.Element {
     return (
         <div className="w-full">
-            <div className="w-full rounded-md flex flex-row justify-around mb-6 bg-gray-200 hover:bg-gray-300">
+            <div className="w-full p-6 rounded-md flex flex-row justify-around mb-6 bg-gray-200 hover:bg-gray-300">
                 { PROPS.header.map(
                     (ITEM: HeaderProps) => (
                         <div
                             key={ ITEM.label }
-                            className="text-left w-full p-6 cursor-default"
+                            className="text-left w-full cursor-default"
                         >
                             <span className="font-semibold">
                                 { ITEM.label }
@@ -41,8 +41,8 @@ export default function Table (PROPS: TableProps): JSX.Element {
                             { PROPS.header.map(
                                 (ITEM_HEADER: HeaderProps, INDEX: number) => (
                                     <div
+                                        className="cursor-default text-left font-light w-full"
                                         key={ `inner-${ INDEX + 3 }-${ ITEM[ PROPS.dataKey ] }` }
-                                        className={ `cursor-default text-left font-light ${ ITEM_HEADER.is_img ? 'w-[89%]' : 'w-full' }` }
                                     >
                                         { ITEM_HEADER.is_img ? (
                                             <img

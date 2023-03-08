@@ -103,7 +103,7 @@ export default function ProfilePage (): JSX.Element {
                             header={ PROFILE_TABLE_HEADERS }
                         />
                     ) : (
-                        <div className="flex mt-6 justify-center">
+                        <div className="flex mt-6 mb-8 justify-center">
                             <p className="text-xl py-3 px-12 border-2 rounded-xl">
                                 No Data Found
                             </p>
