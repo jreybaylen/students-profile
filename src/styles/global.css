@@ -4,9 +4,17 @@
 
 * {
     font-family: 'Fira Sans Condensed', sans-serif;
-    @apply text-slate-800 font-light box-border;
+    @apply text-slate-800 font-normal box-border;
 }
 
 .container {
-    @apply max-w-[1200px] w-full mx-auto;
+    @apply max-w-[1300px] w-full mx-auto;
+}
+
+.profile-content {
+    @apply border-[1px] shadow-xl py-6 pb-8 px-6 rounded-lg;
+}
+
+.profile-left p {
+    @apply mb-1;
 }

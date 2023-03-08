@@ -2,22 +2,22 @@ import { useStudentInformation } from '@hooks/index'
 
 import { TABLE_HEADERS } from '@constants/index'
 
-import Table from '@shared/widgets/Table'
-import HeaderWidget from '@shared/components/Header'
+import TableWidget from '@shared/widgets/Table'
+import Header from '@shared/components/Header'
 
 export default function HomePage (): JSX.Element {
     const { data } = useStudentInformation()
 
     return (
         <main>
-            <HeaderWidget />
-            <div className="container mt-12 mb-4">
-                <Table
+            <Header />
+            <section className="container mt-12 mb-4">
+                <TableWidget
                     items={ data }
                     dataKey="email"
                     header={ TABLE_HEADERS }
                 />
-            </div>
+            </section>
         </main>
     )
 }

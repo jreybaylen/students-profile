@@ -41,7 +41,7 @@ export default function Table (PROPS: TableProps): JSX.Element {
                             { PROPS.header.map(
                                 (ITEM_HEADER: HeaderProps, INDEX: number) => (
                                     <div
-                                        className="cursor-default text-left w-[14.29%]"
+                                        className="cursor-default text-left w-[14.29%] font-light"
                                         key={ `inner-${ INDEX + 3 }-${ ITEM[ PROPS.dataKey ] }` }
                                     >
                                         { ITEM_HEADER.is_img ? (
