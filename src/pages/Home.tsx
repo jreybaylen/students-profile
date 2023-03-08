@@ -23,11 +23,12 @@ export default function HomePage (): JSX.Element {
                     name,
                     phone,
                     email,
+                    nickname,
                     profile_major,
                     profile_status_eval,
                     courses_count
                 } = STUDENT
-                const STRING_TO_SEARCH = `${ name }${ phone }${ email }${ profile_major }${ profile_status_eval }${ courses_count }`
+                const STRING_TO_SEARCH = `${ name }${ phone }${ email }${ profile_major }${ profile_status_eval }${ courses_count }${ nickname }`
 
                 return STRING_TO_SEARCH.match(INPUT)
             }
