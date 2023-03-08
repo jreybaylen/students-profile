@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useEffect, useState } from 'react'
 
 import { getStatus } from '@utils/status'
+import { SESSION_STORAGE_NAME } from '@constants/index'
 
 type StudentProps = {
     id: number
@@ -52,7 +53,7 @@ export default function useStudentInformation () {
     }
 
     useEffect(() => {
-        const CACHE_STUDENTS = sessionStorage.getItem('students-profile')
+        const CACHE_STUDENTS = sessionStorage.getItem(SESSION_STORAGE_NAME)
 
         if (CACHE_STUDENTS) {
             setStudents(JSON.parse(CACHE_STUDENTS))
@@ -67,7 +68,6 @@ export default function useStudentInformation () {
                 const { data: PROFILE_DATA } = await axios.get('/214aef9d-b18a-4188-b55f-a25046408a7e')
                 const { data: COURSES_DATA } = await axios.get('/34bdbb5f-70c0-41ce-aa0c-2bf46befa477')
                 const { data: STUDENTS_DATA } = await axios.get('/79ebd782-efd6-469b-8dd5-663cf03406ad')
-                console.log('COURSES_DATA: ', COURSES_DATA)
                 const MERGE_DATA = (STUDENTS_DATA as Array<StudentProps>).map(
                     (STUDENT: StudentProps) => {
                         let coursesNoDuplicates: CourseKeyProps = { }
@@ -99,7 +99,7 @@ export default function useStudentInformation () {
                     }
                 )
 
-                sessionStorage.setItem('students-profile', JSON.stringify(MERGE_DATA))
+                sessionStorage.setItem(SESSION_STORAGE_NAME, JSON.stringify(MERGE_DATA))
                 setStudents(MERGE_DATA as Array<StudentInformationprops>)
             } catch (ERROR: any) {
                 setError(ERROR)

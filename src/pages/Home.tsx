@@ -1,40 +1,9 @@
 import { useStudentInformation } from '@hooks/index'
 
+import { TABLE_HEADERS } from '@constants/index'
+
 import Table from '@shared/widgets/Table'
 import HeaderWidget from '@shared/components/Header'
-
-const TABLE_HEADERS = [
-    {
-        is_img: true,
-        label: '',
-        prop: 'profile_img'
-    },
-    {
-        label: 'Name',
-        prop: 'name',
-        linkProp: 'id'
-    },
-    {
-        label: 'Phone Number',
-        prop: 'phone'
-    },
-    {
-        label: 'Email',
-        prop: 'email'
-    },
-    {
-        label: 'Major',
-        prop: 'profile_major'
-    },
-    {
-        label: 'Status',
-        prop: 'profile_status_eval'
-    },
-    {
-        label: 'Total Course',
-        prop: 'courses_count'
-    }
-]
 
 export default function HomePage (): JSX.Element {
     const { data } = useStudentInformation()

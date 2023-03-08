@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
+import { SESSION_STORAGE_NAME } from '@constants/index'
 import type { StudentInformationprops } from '@hooks/useStudentsInformation'
 
 import HeaderWidget from '@shared/components/Header'
@@ -11,7 +12,7 @@ export default function ProfilePage (): JSX.Element {
     const [ PROFILE, setProfile ] = useState<StudentInformationprops>()
 
     useEffect(() => {
-        const STUDENTS = sessionStorage.getItem('students-profile')
+        const STUDENTS = sessionStorage.getItem(SESSION_STORAGE_NAME)
 
         if (!STUDENTS) {
             navigate('/', { replace: true })
