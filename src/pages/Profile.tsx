@@ -6,8 +6,8 @@ import type { HeaderProps } from '@shared/widgets/Table'
 import { SESSION_STORAGE_NAME, PROFILE_TABLE_HEADERS } from '@constants/index'
 import type { StudentInformationprops, CourseProps } from '@hooks/useStudentsInformation'
 
-import Header from '@shared/components/Header'
 import TableWidget from '@shared/widgets/Table'
+import { Header, Information } from '@shared/components'
 
 type ModifiedStudentInformationprops = {
     courses: Array<Array<CourseProps>>
@@ -112,30 +112,22 @@ export default function ProfilePage (): JSX.Element {
                         />
                     </div>
                     <div className="profile-left pl-6">
-                        <p className="w-full">
-                            <span className="mr-2">Name: </span>
-                            <span className="font-semibold">
-                                { STUDENT?.name } { STUDENT?.nickname ? `(${ STUDENT.nickname })` : '' }
-                            </span>
-                        </p>
-                        <p>
-                            <span className="mr-2">Major: </span>
-                            <span className="font-semibold">
-                                { STUDENT?.profile_major }
-                            </span>
-                        </p>
-                        <p>
-                            <span className="mr-2">Year: </span>
-                            <span className="font-semibold">
-                                { STUDENT?.profile.year }
-                            </span>    
-                        </p>
-                        <p>
-                            <span className="mr-2">Status: </span>
-                            <span className="font-semibold">
-                                { STUDENT?.profile_status_eval }
-                            </span>
-                        </p>
+                        <Information
+                            category="Name: "
+                            description={ `${ STUDENT?.name } ${ STUDENT?.nickname ? `(${ STUDENT.nickname })` : '' }` }
+                        />
+                        <Information
+                            category="Major: "
+                            description={ `${ STUDENT?.profile_major }` }
+                        />
+                        <Information
+                            category="Year: "
+                            description={ `${ STUDENT?.profile.year }` }
+                        />
+                        <Information
+                            category="Status: "
+                            description={ `${ STUDENT?.profile_status_eval }` }
+                        />
                     </div>
                 </aside>
                 <div className="profile-content ml-3 w-9/12 h-max max-h-[700px] overflow-y-auto">
