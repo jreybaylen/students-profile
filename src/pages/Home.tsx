@@ -9,6 +9,11 @@ import type { StudentInformationprops } from '@hooks/useStudentsInformation'
 import Header from '@shared/components/Header'
 import { Table, Loading } from '@shared/widgets'
 
+type OptionProps = {
+    sort: boolean
+    propSort: keyof StudentInformationprops
+}
+
 export default function HomePage (): JSX.Element {
     const [ SEARCH, setSearch ] = useState('')
     const [ SORTING, setSorting ] = useState<HeaderProps>()
@@ -35,11 +40,36 @@ export default function HomePage (): JSX.Element {
         )
 
         setSearch(INPUT)
-        setCloneData(FILTERED_DATA)
+        setCloneData(
+            processSorting(
+                FILTERED_DATA,
+                {
+                    sort: SORTING?.sort === 'ASC',
+                    propSort: SORTING?.prop as keyof StudentInformationprops
+                }
+            )
+        )
     }
 
-    function hanleSortTable (DATA: HeaderProps,
-        SORT_TYPE: HeaderProps['sort']) {
+    function processSorting (PREV_STUDENTS: Array<StudentInformationprops>, OPTIONS: OptionProps) {
+        const SORTED_STUDENTS = PREV_STUDENTS.sort(
+            (PREV_STUDENT: StudentInformationprops, NEXT_STUDENT: StudentInformationprops) => {
+                if (PREV_STUDENT[ OPTIONS.propSort ] < NEXT_STUDENT[ OPTIONS.propSort ]) {
+                    return OPTIONS.sort ? -1 : 1
+                }
+
+                if (PREV_STUDENT[ OPTIONS.propSort ] > NEXT_STUDENT[ OPTIONS.propSort ]) {
+                    return OPTIONS.sort ? 1 : -1
+                }
+
+                return 0
+            }
+        )
+
+        return SORTED_STUDENTS
+    }
+
+    function handleSortTable (DATA: HeaderProps, SORT_TYPE: HeaderProps['sort']) {
         const UPDATED_SORTING = {
             ...DATA,
             sort: SORT_TYPE || 'None'
@@ -48,24 +78,29 @@ export default function HomePage (): JSX.Element {
         const PROP_SORT = UPDATED_SORTING.prop as keyof StudentInformationprops
 
         setSorting(UPDATED_SORTING)
-        updateStudents(
-            (PREV_STUDENTS: Array<StudentInformationprops>) => {
-                const SORTED_STUDENTS = PREV_STUDENTS.sort(
-                    (PREV_STUDENT: StudentInformationprops, NEXT_STUDENT: StudentInformationprops) => {
-                        if (PREV_STUDENT[ PROP_SORT ] < NEXT_STUDENT[ PROP_SORT ]) {
-                            return IS_ASC ? -1 : 1
-                        }
 
-                        if (PREV_STUDENT[ PROP_SORT ] > NEXT_STUDENT[ PROP_SORT ]) {
-                            return IS_ASC ? 1 : -1
-                        }
-
-                        return 0
+        if (SEARCH) {
+            setCloneData(
+                (PREV_STUDENTS: Array<StudentInformationprops>) => processSorting(
+                    PREV_STUDENTS,
+                    {
+                        sort: IS_ASC,
+                        propSort: PROP_SORT
                     }
                 )
+            )
 
-                return SORTED_STUDENTS
-            }
+            return
+        }
+
+        updateStudents(
+            (PREV_STUDENTS: Array<StudentInformationprops>) => processSorting(
+                PREV_STUDENTS,
+                {
+                    sort: IS_ASC,
+                    propSort: PROP_SORT
+                }
+            )
         )
     }
 
@@ -89,7 +124,7 @@ export default function HomePage (): JSX.Element {
                             dataKey="email"
                             items={ CLONE_DATA }
                             activeSort={ SORTING }
-                            onSort={ hanleSortTable }
+                            onSort={ handleSortTable }
                             header={ HOME_TABLE_HEADERS }
                         />
                     ) : (
@@ -97,7 +132,7 @@ export default function HomePage (): JSX.Element {
                             items={ data }
                             dataKey="email"
                             activeSort={ SORTING }
-                            onSort={ hanleSortTable }
+                            onSort={ handleSortTable }
                             header={ HOME_TABLE_HEADERS }
                         />
                     )
