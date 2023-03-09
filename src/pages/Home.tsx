@@ -117,26 +117,15 @@ export default function HomePage (): JSX.Element {
                         className="w-full border-[1px] py-3 px-5 rounded-full font-light"
                     />
                 </div>
-                { isLoading
-                    ? <Loading />
-                    : SEARCH ? (
-                        <Table
-                            dataKey="email"
-                            items={ CLONE_DATA }
-                            activeSort={ SORTING }
-                            onSort={ handleSortTable }
-                            header={ HOME_TABLE_HEADERS }
-                        />
-                    ) : (
-                        <Table
-                            items={ data }
-                            dataKey="email"
-                            activeSort={ SORTING }
-                            onSort={ handleSortTable }
-                            header={ HOME_TABLE_HEADERS }
-                        />
-                    )
-                }
+                { isLoading ? <Loading /> : (
+                    <Table
+                        dataKey="email"
+                        activeSort={ SORTING }
+                        onSort={ handleSortTable }
+                        header={ HOME_TABLE_HEADERS }
+                        items={ SEARCH ? CLONE_DATA : data }
+                    />
+                ) }
             </section>
         </main>
     )
